@@ -1,0 +1,6 @@
+set adjust-open "best-fit"
+set statusbar-h-padding 0
+set statusbar-v-padding 0
+set selection-clipboard clipboard
+set font "Meslo LG M Regular Nerd Font Complete 15"
+set scroll-step 50
