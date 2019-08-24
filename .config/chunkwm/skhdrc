@@ -1,6 +1,12 @@
 # opens iTerm2
 alt - return : "${HOME}"/.config/chunkwm/scripts/open_iterm2.sh
 
+# opens Finder
+alt - x : open "${HOME}"
+
+# open Firefox
+alt - a : open -a /Applications/Firefox.app
+
 # Show system statistics
 fn + lalt - 1 : "${HOME}"/.config/chunkwm/scripts/show_cpu.sh
 fn + lalt - 2 : "${HOME}"/.config/chunkwm/scripts/show_mem.sh
@@ -34,16 +40,16 @@ shift + alt - 6 : chunkc tiling::window --send-to-desktop 6
 
 
 
-shift + cmd - n : chunkc tiling::desktop --create;\
+shift + lctrl - n : chunkc tiling::desktop --create;\
                   ids=$(chunkc tiling::query --desktops-for-monitor $(chunkc tiling::query --monitor-for-desktop $(chunkc tiling::query --desktop id)));\
                   chunkc tiling::desktop --focus $(echo ${ids##* })
 
-shift + cmd - 1 : chunkc tiling::desktop --focus 1
-shift + cmd - 2 : chunkc tiling::desktop --focus 2
-shift + cmd - 3 : chunkc tiling::desktop --focus 3
-shift + cmd - 4 : chunkc tiling::desktop --focus 4
-shift + cmd - 5 : chunkc tiling::desktop --focus 5
-shift + cmd - 6 : chunkc tiling::desktop --focus 6
+shift + lctrl - 1 : chunkc tiling::desktop --focus 1
+shift + lctrl - 2 : chunkc tiling::desktop --focus 2
+shift + lctrl - 3 : chunkc tiling::desktop --focus 3
+shift + lctrl - 4 : chunkc tiling::desktop --focus 4
+shift + lctrl - 5 : chunkc tiling::desktop --focus 5
+shift + lctrl - 6 : chunkc tiling::desktop --focus 6
 
 
 # Resize windows

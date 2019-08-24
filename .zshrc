@@ -6,6 +6,11 @@ export PATH=$HOME/libsvm/python:$PATH
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/waynetu/.oh-my-zsh
 export PATH="/anaconda3/bin:$PATH"
+export PATH="$HOME/tmux/:$PATH"
+export PATH="/usr/local/opt/llvm/bin:$PATH"
+
+export BENCHMARK=$HOME/google-benchmark/build/src
+export BOOST=$HOME/boost_1_71_0
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -93,6 +98,8 @@ LSCOLORS=Exfxcxdxbxegedabagacad
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 
+export OPENCV='/usr/local/Cellar/opencv/4.0.1/include/opencv4'
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -107,16 +114,18 @@ LSCOLORS=Exfxcxdxbxegedabagacad
 
 alias ls='ls -G'
 alias weather='curl -4 wttr.in/Taipei'
-alias g++="/usr/local/bin/g++-8"
-alias gcc="/usr/local/bin/gcc-8"
 alias vim="nvim"
 alias factor="/usr/local/bin/gfactor"
 alias pandoc="pandoc --pdf-engine=xelatex --variable geometry="margin=0.5in" -s -f markdown"
 alias time="gtime -f 'user: %U system: %S elapsed: %e cpu: %P memory: %M'"
 
-alias zshrc="vim ~/Desktop/dotfiles/zshrc"
-alias vimrc="vim ~/Desktop/dotfiles/vimrc"
+alias g++='g++-8'
+
+alias zshrc="vim ~/.zshrc"
+alias vimrc="vim ~/.vimrc"
 alias tmux.conf="vim ~/Desktop/dotfiles/tmux.conf"
+
+alias ptt2="ssh bbsu@ptt2.cc"
 
 alias pdf='zathura'
 
