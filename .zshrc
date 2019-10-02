@@ -76,7 +76,12 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-PROMPT='%{$fg[white]%}%n%{$reset_color%}@%{$fg[white]%}macbook:%{$FG[031]%}%~%{$reset_color%}%(!.#.$) '
+showpwd() {
+  echo ${${:-/${(j:/:)${(M)${(s:/:)${(D)PWD:h}}#(|.)[^.]}}/${PWD:t}}//\/~/\~}
+}
+
+# PROMPT='%{$fg[white]%}%n%{$reset_color%}@%{$fg[white]%}macbook:%{$FG[031]%}%~%{$reset_color%}%(!.#.$) '
+PROMPT='%{$fg[white]%}%n%{$reset_color%}@%{$fg[white]%}macbook:%{$FG[031]%}$(showpwd)%{$reset_color%}%(!.#.$) '
 LSCOLORS=Exfxcxdxbxegedabagacad
 # User configuration
 
@@ -110,28 +115,34 @@ export OPENCV='/usr/local/Cellar/opencv/4.0.1/include/opencv4'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
 # autoload -U promptinit; promptinit
+#
 # prompt pure
+#
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
 
 alias ls='ls -G'
 alias weather='curl -4 wttr.in/Taipei'
 alias vim="nvim"
 alias factor="/usr/local/bin/gfactor"
 alias pandoc="pandoc --pdf-engine=xelatex --variable geometry="margin=0.5in" -s -f markdown"
-alias time="gtime -f 'user: %U system: %S elapsed: %e cpu: %P memory: %M'"
+alias time="gtime -f '%U user %S system %E elapsed %P CPU (%X avgtext + %D avgdata %M maxresident)k
+%I inputs + %O outputs (%F major + %R minor)pagefaults %W swaps'"
 
-alias g++='g++-8'
+alias g++='g++-9'
+alias gcc='gcc-9'
 
 alias zshrc="vim ~/.zshrc"
 alias vimrc="vim ~/.vimrc"
 alias tmux.conf="vim ~/Desktop/dotfiles/tmux.conf"
 
+alias ctags="`brew --prefix`/bin/ctags"
+
 alias ptt2="ssh bbsu@ptt2.cc"
 
 alias pdf='zathura'
-
-function newtex() {
-    cp ~/Documents/template.tex $1
-}
 
 function vimtex() {
     if [ -f $1 ];
@@ -144,5 +155,6 @@ function vimtex() {
 }
 
 # source /Users/waynetu/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-export HOMEBREW_GITHUB_API_TOKEN=e4aa366f7a7f3c8d60437bdcd1a0a9bb3be74aaa
+export HOMEBREW_GITHUB_API_TOKEN=9bce8a5b42be9b36f51ff2ba3d8f2fbc524dfca1
 alias config='/usr/local/bin/git --git-dir=/Users/waynetu/dotfiles --work-tree=/Users/waynetu'
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
