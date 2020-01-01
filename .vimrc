@@ -12,11 +12,11 @@ set number relativenumber
 set nocompatible              " be iMproved, required
 filetype off                  " required 
 set backspace=indent,eol,start
-let g:Powerline_symbols = 'fancy'
+" let g:Powerline_symbols = 'fancy'
 let g:NERDSpaceDelims = 1
-let g:python_highlight_all = 1
-let g:python_highlight_space_errors = 0
-let g:python_highlight_indent_errors = 0
+" let g:python_highlight_all = 1
+" let g:python_highlight_space_errors = 0
+" let g:python_highlight_indent_errors = 0
 set encoding=utf-8
 set t_Co=256
 set fillchars+=stl:\ ,stlnc:\
@@ -51,8 +51,8 @@ autocmd Filetype tex inoremap @enuma \begin{enumerate}[label=(\alph*)]<Enter>\it
 autocmd Filetype tex inoremap @item \begin{itemize}<Enter>\item<Enter>\end{itemize}<Esc>kA<Space>
 
 " Switching tab size from 2 to 4 and vice versa
-command Tab4 se bs=2 ru mouse=a cin et ts=4 sw=4 sts=4
-command Tab2 se bs=2 ru mouse=a cin et ts=2 sw=2 sts=2
+command T4 se bs=2 ru mouse=a cin et ts=4 sw=4 sts=4
+command T2 se bs=2 ru mouse=a cin et ts=2 sw=2 sts=2
 
 " Set Ctrl+J to jumping to the next placeholder
 inoremap <C-J> <Esc>/<++><CR><Esc>cf>
@@ -60,6 +60,7 @@ nnoremap <C-J> <Esc>/<++><CR><Esc>cf>
 
 " Set Ctrl+F to clang-format the code
 map <C-F> :pyf /usr/local/opt/llvm/share/clang/clang-format.py<CR>
+map <C-P> ggvG<C-F><C-o>
 
 " Turn off syntax highlighting for javascript, html and TeX.
 autocmd Filetype javascript setlocal syntax=off
@@ -68,6 +69,8 @@ autocmd Filetype tex setlocal syntax=off
 
 " Enable C++ syntax highlighting for C files
 autocmd BufEnter *.c :setlocal filetype=cpp
+
+" autocmd FileType python set softtabstop=2 smarttab
 
 " Set ctag file location
 set tags=./tags,tags;$HOME
