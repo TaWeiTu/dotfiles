@@ -12,9 +12,9 @@ export PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/bison/bin:$PATH"
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 
-export BENCHMARK="$HOME/google-benchmark/build/src"
-export BENCHMARK_FLAG="-isystem ${HOME}/google-benchmark/include -L${BENCHMARK} -lbenchmark -lpthread"
-export BOOST=$HOME/boost_1_71_0
+export BENCHMARK="$HOME/libs/google-benchmark/build/src"
+export BENCHMARK_FLAG="-isystem ${HOME}/libs/google-benchmark/include -L${BENCHMARK} -lbenchmark -lpthread"
+export BOOST=$HOME/libs/boost_1_71_0
 export HOMEBREW_GITHUB_API_TOKEN=9bce8a5b42be9b36f51ff2ba3d8f2fbc524dfca1
 export OPENCV='/usr/local/Cellar/opencv/4.0.1/include/opencv4'
 
@@ -123,6 +123,7 @@ bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v
+bindkey "^R" history-incremental-search-backward
 
 alias ls='ls -G'
 alias weather='curl -4 wttr.in/Taipei'
@@ -131,7 +132,7 @@ alias factor="/usr/local/bin/gfactor"
 alias pandoc="pandoc --pdf-engine=xelatex --variable geometry="margin=0.5in" -s -f markdown"
 alias time="gtime -f '%U user %S system %E elapsed %P CPU (%X avgtext + %D avgdata %M maxresident)k
 %I inputs + %O outputs (%F major + %R minor)pagefaults %W swaps'"
-alias g++='g++-9'
+alias g++='g++-9 -W -Wall -Wextra -std=c++17 -O2'
 alias gcc='gcc-9'
 alias zshrc="vim ~/.zshrc"
 alias vimrc="vim ~/.vimrc"
@@ -155,3 +156,5 @@ function vimtex() {
 
 # source /Users/waynetu/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+export PATH="/usr/local/opt/flex/bin:$PATH"
+export PATH="${HOME}/projects/printfile:$PATH"

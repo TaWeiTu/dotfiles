@@ -62,7 +62,11 @@ nnoremap <C-J> <Esc>/<++><CR><Esc>cf>
 map <C-F> :pyf /usr/local/opt/llvm/share/clang/clang-format.py<CR>
 map <C-P> ggvG<C-F><C-o>
 
-" Turn off syntax highlighting for javascript, html and TeX.
+" Ctrl+H to stop searching
+vnoremap <C-H> :nohlsearch<CR>
+nnoremap <C-H> :nohlsearch<CR>
+
+" Turn off syntax highlighting for JavaScript, HTML and TeX.
 autocmd Filetype javascript setlocal syntax=off
 autocmd Filetype html setlocal syntax=off
 autocmd Filetype tex setlocal syntax=off
