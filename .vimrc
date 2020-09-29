@@ -1,3 +1,5 @@
+set shell=/bin/bash
+let mapleader = "\<Space>"
 " Plugins
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -6,6 +8,11 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'tpope/vim-surround'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 call vundle#end()
+
+call plug#begin()
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+call plug#end()
 
 " Some basic setup
 set number relativenumber
@@ -49,6 +56,18 @@ autocmd Filetype tex inoremap @pr  \begin{problem}\end{problem}<Esc>o
 autocmd Filetype tex inoremap @enum1 \begin{enumerate}<Enter>\item<Enter>\end{enumerate}<Esc>kA<Space>
 autocmd Filetype tex inoremap @enuma \begin{enumerate}[label=(\alph*)]<Enter>\item<Enter>\end{enumerate}<Esc>kA<Space>
 autocmd Filetype tex inoremap @item \begin{itemize}<Enter>\item<Enter>\end{itemize}<Esc>kA<Space>
+autocmd Filetype tex inoremap @tab \begin{tabular}{}<Enter>\end{tabular}<Esc>kf{a
+
+
+let g:fzf_layout = { 'down': '~20%' }
+
+command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, <bang>0)
+command! -bang -nargs=? -complete=dir Buffers call fzf#vim#buffers(<q-args>, <bang>0)
+
+noremap <leader>l :Rg<CR>
+nmap <leader>j :Files<CR> 
+nmap <leader>k :Buffers<CR>
+
 
 " Switching tab size from 2 to 4 and vice versa
 command T4 se bs=2 ru mouse=a cin et ts=4 sw=4 sts=4
@@ -58,13 +77,16 @@ command T2 se bs=2 ru mouse=a cin et ts=2 sw=2 sts=2
 inoremap <C-J> <Esc>/<++><CR><Esc>cf>
 nnoremap <C-J> <Esc>/<++><CR><Esc>cf>
 
-" Set Ctrl+F to clang-format the code
+" Set Ctrl+F to re-format the C/C++ code using clang-format
 map <C-F> :pyf /usr/local/opt/llvm/share/clang/clang-format.py<CR>
 map <C-P> ggvG<C-F><C-o>
 
-" Ctrl+H to stop searching
+" Ctrl+H to disable highlight search
 vnoremap <C-H> :nohlsearch<CR>
 nnoremap <C-H> :nohlsearch<CR>
+
+" <leader><leader> toggles between buffers
+nnoremap <leader><leader> <C-^>
 
 " Turn off syntax highlighting for JavaScript, HTML and TeX.
 autocmd Filetype javascript setlocal syntax=off
@@ -100,3 +122,5 @@ endfunction
 
 " Set Ctrl+T to updating tags
 map <C-T> :call UpdateTags() <CR>
+
+set fsync

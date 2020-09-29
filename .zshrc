@@ -11,6 +11,7 @@ export PATH="/usr/local/opt/llvm/bin:$PATH"
 export PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
 export PATH="/usr/local/opt/bison/bin:$PATH"
 export PATH="/usr/local/opt/ruby/bin:$PATH"
+export PATH="/Users/waynetu/Library/Python/3.7/bin:$PATH"
 
 export BENCHMARK="$HOME/libs/google-benchmark/build/src"
 export BENCHMARK_FLAG="-isystem ${HOME}/libs/google-benchmark/include -L${BENCHMARK} -lbenchmark -lpthread"
@@ -158,3 +159,5 @@ function vimtex() {
 [ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 export PATH="/usr/local/opt/flex/bin:$PATH"
 export PATH="${HOME}/projects/printfile:$PATH"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
