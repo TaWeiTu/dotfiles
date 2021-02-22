@@ -7,6 +7,7 @@ setenv CC gcc-10
 setenv CXX g++-10
 setenv CPLUS_INCLUDE_PATH /usr/local/include/
 setenv LIBRARY_PATH /usr/local/lib/
+setenv LD_LIBRARY_PATH /usr/local/lib/
 
 # set -U fish_user_paths $HOME/.cargo/bin $fish_user_paths
 
