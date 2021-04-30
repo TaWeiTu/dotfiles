@@ -1,13 +1,14 @@
 set shell=/bin/bash
 let mapleader = "\<Space>"
 
+set termguicolors
+" Color scheme
+colorscheme Tomorrow-Night
+
 call plug#begin()
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
+Plug 'neovim/nvim-lspconfig'
 call plug#end()
 
 " Some basic setup
@@ -40,8 +41,8 @@ se bs=2 ru mouse=a cin et ts=2 sw=2 sts=2
 inoremap {<CR>  {<CR>}<Esc>O
 syntax on
 
-" Color scheme
-colorscheme Tomorrow-Night
+" show column-width marker
+set colorcolumn=80
 
 " Replace the default NVIM cursor with the VIM one
 set guicursor=
@@ -120,7 +121,4 @@ endfunction
 map <C-T> :call UpdateTags() <CR>
 
 set fsync
-
-let g:LanguageClient_serverCommands = {
-  \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-  \ }
+luafile $HOME/.config/nvim/lsp-config.lua
