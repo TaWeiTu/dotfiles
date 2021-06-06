@@ -1,14 +1,13 @@
 set shell=/bin/bash
 let mapleader = "\<Space>"
 
-set termguicolors
-" Color scheme
-colorscheme Tomorrow-Night
-
 call plug#begin()
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neovim/nvim-lspconfig'
+Plug 'rust-lang/rust.vim'
+Plug 'nvim-lua/lsp_extensions.nvim'
+Plug 'hrsh7th/nvim-compe'
 call plug#end()
 
 " Some basic setup
@@ -39,7 +38,11 @@ set wildmenu
 set hlsearch
 se bs=2 ru mouse=a cin et ts=2 sw=2 sts=2
 inoremap {<CR>  {<CR>}<Esc>O
-syntax on
+syntax enable
+
+set termguicolors
+" Color scheme
+colorscheme Tomorrow-Night
 
 " show column-width marker
 set colorcolumn=80
@@ -66,7 +69,7 @@ nmap <leader>j :Files<CR>
 nmap <leader>k :Buffers<CR>
 
 
-" Switching tab size from 2 to 4 and vice versa
+" Switch tab size from 2 to 4 and vice versa
 command T4 se bs=2 ru mouse=a cin et ts=4 sw=4 sts=4
 command T2 se bs=2 ru mouse=a cin et ts=2 sw=2 sts=2
 
@@ -75,12 +78,16 @@ inoremap <C-J> <Esc>/<++><CR><Esc>cf>
 nnoremap <C-J> <Esc>/<++><CR><Esc>cf>
 
 " Set Ctrl+F to re-format the C/C++ code using clang-format
-map <C-F> :pyf /usr/local/opt/llvm/share/clang/clang-format.py<CR>
-map <C-P> ggvG<C-F><C-o>
+autocmd FileType cpp map <C-F> :pyf /usr/local/opt/llvm/share/clang/clang-format.py<CR>
+autocmd FileType cpp map <C-P> ggvG<C-F><C-o>
 
 " Ctrl+H to disable highlight search
 vnoremap <C-H> :nohlsearch<CR>
 nnoremap <C-H> :nohlsearch<CR>
+
+" Ctrl+C for <Esc>
+vnoremap <C-C> <Esc>
+nnoremap <C-C> <Esc>
 
 " <leader><leader> toggles between buffers
 nnoremap <leader><leader> <C-^>
@@ -93,32 +100,15 @@ autocmd Filetype tex setlocal syntax=off
 " Enable C++ syntax highlighting for C files
 autocmd BufEnter *.c :setlocal filetype=cpp
 
-" autocmd FileType python set softtabstop=2 smarttab
-
-" Set ctag file location
-set tags=./tags,tags;$HOME
-
-function! DelTagOfFile(file)
-  let fullpath = a:file
-  let cwd = getcwd()
-  let tagfilename = cwd . "/tags"
-  let f = substitute(fullpath, cwd . "/", "", "")
-  let f = escape(f, './')
-  let cmd = 'sed -i "/' . f . '/d" "' . tagfilename . '"'
-  let resp = system(cmd)
-endfunction
-
-function! UpdateTags()
-  let f = expand("%:p")
-  let cwd = getcwd()
-  let tagfilename = cwd . "/tags"
-  let cmd = 'ctags -a -f ' . tagfilename . ' --c++-kinds=+p --fields=+iaS --extra=+q ' . '"' . f . '"'
-  call DelTagOfFile(f)
-  let resp = system(cmd)
-endfunction
-
-" Set Ctrl+T to updating tags
-map <C-T> :call UpdateTags() <CR>
+" Ctrl+P to format Rust files
+autocmd FileType rust map <C-P> :!rustfmt %<CR><CR>
 
 set fsync
+
 luafile $HOME/.config/nvim/lsp-config.lua
+luafile $HOME/.config/nvim/compe.lua
+
+set updatetime=300
+autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
+
+autocmd BufEnter,TabEnter,BufRead,BufWrite *.rs :lua require'lsp_extensions'.inlay_hints{ enabled = {"TypeHint", "ChainingHint"} }
