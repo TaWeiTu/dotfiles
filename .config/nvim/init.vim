@@ -7,7 +7,9 @@ Plug 'junegunn/fzf.vim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'rust-lang/rust.vim'
 Plug 'nvim-lua/lsp_extensions.nvim'
-Plug 'hrsh7th/nvim-compe'
+Plug 'nvim-lua/completion-nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'nvim-treesitter/playground'
 call plug#end()
 
 " Some basic setup
@@ -15,11 +17,7 @@ set number relativenumber
 set nocompatible              " be iMproved, required
 filetype off                  " required 
 set backspace=indent,eol,start
-" let g:Powerline_symbols = 'fancy'
 let g:NERDSpaceDelims = 1
-" let g:python_highlight_all = 1
-" let g:python_highlight_space_errors = 0
-" let g:python_highlight_indent_errors = 0
 set encoding=utf-8
 set t_Co=256
 set fillchars+=stl:\ ,stlnc:\
@@ -40,8 +38,8 @@ se bs=2 ru mouse=a cin et ts=2 sw=2 sts=2
 inoremap {<CR>  {<CR>}<Esc>O
 syntax enable
 
-set termguicolors
 " Color scheme
+set termguicolors
 colorscheme Tomorrow-Night
 
 " show column-width marker
@@ -59,6 +57,7 @@ autocmd Filetype tex inoremap @item \begin{itemize}<Enter>\item<Enter>\end{itemi
 autocmd Filetype tex inoremap @tab \begin{tabular}{}<Enter>\end{tabular}<Esc>kf{a
 
 
+" --- fzf ---
 let g:fzf_layout = { 'down': '~20%' }
 
 command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, <bang>0)
@@ -76,6 +75,9 @@ command T2 se bs=2 ru mouse=a cin et ts=2 sw=2 sts=2
 " Set Ctrl+J to jumping to the next placeholder
 inoremap <C-J> <Esc>/<++><CR><Esc>cf>
 nnoremap <C-J> <Esc>/<++><CR><Esc>cf>
+
+" Treat C as C++
+autocmd BufEnter *.c :setlocal filetype=cpp
 
 " Set Ctrl+F to re-format the C/C++ code using clang-format
 autocmd FileType cpp map <C-F> :pyf /usr/local/opt/llvm/share/clang/clang-format.py<CR>
@@ -97,18 +99,28 @@ autocmd Filetype javascript setlocal syntax=off
 autocmd Filetype html setlocal syntax=off
 autocmd Filetype tex setlocal syntax=off
 
-" Enable C++ syntax highlighting for C files
-autocmd BufEnter *.c :setlocal filetype=cpp
-
 " Ctrl+P to format Rust files
 autocmd FileType rust map <C-P> :!rustfmt %<CR><CR>
 
 set fsync
 
 luafile $HOME/.config/nvim/lsp-config.lua
-luafile $HOME/.config/nvim/compe.lua
+" luafile $HOME/.config/nvim/treesitter.lua
 
+" Show diagnostic on hover
 set updatetime=300
 autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
 
+" Enable inlay hints for Rust
 autocmd BufEnter,TabEnter,BufRead,BufWrite *.rs :lua require'lsp_extensions'.inlay_hints{ enabled = {"TypeHint", "ChainingHint"} }
+
+" --- completion-nvim ---
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing message extra message when using completion
+set shortmess+=c

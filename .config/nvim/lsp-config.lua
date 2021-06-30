@@ -32,6 +32,7 @@ local on_attach = function(client, bufnr)
   if client.resolved_capabilities.document_range_formatting then
     buf_set_keymap("v", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
   end
+  require'completion'.on_attach()
 end
 
 -- Use a loop to conveniently both setup defined servers 
