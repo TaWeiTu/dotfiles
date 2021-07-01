@@ -10,6 +10,9 @@ Plug 'nvim-lua/lsp_extensions.nvim'
 Plug 'nvim-lua/completion-nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'nvim-treesitter/playground'
+Plug 'google/vim-maktaba'
+Plug 'google/vim-codefmt'
+Plug 'google/vim-glaive'
 call plug#end()
 
 " Some basic setup
@@ -23,7 +26,6 @@ set t_Co=256
 set fillchars+=stl:\ ,stlnc:\
 " set term=xterm-256color
 set termencoding=utf-8
-execute pathogen#infect()
 filetype plugin indent on
 set background=dark
 set ic
@@ -124,3 +126,7 @@ set completeopt=menuone,noinsert,noselect
 
 " Avoid showing message extra message when using completion
 set shortmess+=c
+
+" Leader + '=' for formatting
+nnoremap <leader>= :FormatCode<CR>
+vnoremap <leader>= :FormatLines<CR>
